@@ -13,6 +13,12 @@ namespace DiarioAplicacion
         public string RutaDelArchivoDelDiario { get; set; }
         public string NombreDelArchivoDelDiario { get; set; }
 
+        public Diario()
+        {
+            RutaDelArchivoDelDiario = @"C:\Users\Luis Fernando\Desktop\Diario/" + NombreDelArchivoDelDiario;
+            NombreDelArchivoDelDiario = "Diario.txt";
+        }
+
         //Regresa true si existe el archivo del diario en la ruta
         public bool ExisteArchivoDiario()
         {
@@ -21,15 +27,57 @@ namespace DiarioAplicacion
         //Crea el archivo del diario si no existe, y regresa true si existe, o false si no existe
         public bool CrearArchivoDiario()
         {
-            return ExisteArchivoDiario != null;
+            if (ExisteArchivoDiario())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }    
-        public bool EscribirDiario(string texto)
+        public string EscribirDiario(string RutaDelArchivoDelDiario)
         {
-            return true;
+            if (ExisteArchivoDiario())
+            {
+                string EntradaDeTexto = Console.ReadLine();
+                StreamWriter sw = new StreamWriter(NombreDelArchivoDelDiario, true);
+                sw.WriteLine(EntradaDeTexto);
+                sw.Close();
+                return "Entrada Exitosa";
+            }
+            else
+            {
+                CrearArchivoDiario();
+                string EntradaDeTexto = Console.ReadLine();
+                StreamWriter sw = new StreamWriter(NombreDelArchivoDelDiario, true);
+                sw.WriteLine(EntradaDeTexto);
+                sw.Close();
+                return "Entrada Exitosa";
+
+            }
+
         }
-        public string LeerDiario(string texto)
+        public string LeerDiario(string diarioNombre)
         {
-            return texto;
+            if (ExisteArchivoDiario())
+            {
+                StreamReader sr = new StreamReader(diarioNombre);
+                string texto = null;
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    texto += (line + "\n");
+                    line = sr.ReadLine();
+                }
+                sr.Close();
+                return texto;
+            }
+            else
+            {
+                return "UPS el Diario no se ha encointrado";
+            }
+           
         }
 
     }
