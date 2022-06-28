@@ -15,8 +15,7 @@ namespace DiarioAplicacion
 
         public Diario()
         {
-            RutaDelArchivoDelDiario = @"C:\Users\Luis Fernando\Desktop\Diario/" + NombreDelArchivoDelDiario;
-            NombreDelArchivoDelDiario = "Diario.txt";
+            RutaDelArchivoDelDiario = @"C:\Users\Luis Fernando\Desktop\Diario";
         }
 
         //Regresa true si existe el archivo del diario en la ruta
@@ -33,6 +32,7 @@ namespace DiarioAplicacion
             }
             else
             {
+                RutaDelArchivoDelDiario = System.IO.Path.Combine(RutaDelArchivoDelDiario, NombreDelArchivoDelDiario);
                 return true;
             }
         }    
